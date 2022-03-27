@@ -2,22 +2,22 @@
 var userInput = document.getElementById('enterCity')
 var userForm = document.getElementById('userForm')
 var userList = document.getElementById('userList')
-
+var fiveDay = document.querySelector('.fivedayforecast')
 var searchHistory = [];
 
 userForm.addEventListener('submit', function(event) {
     event.preventDefault()
 
     var searchValue = userInput.value.trim();
-    
+    fiveDay.innerHTML = " "
     getWeather(searchValue);
 
     searchHistory.push(searchValue);
     userInput.value = "";
+    
 
     setCity();
     renderCity();
-
 })
 
 function getWeather(searchValue){
@@ -35,7 +35,7 @@ function getWeather(searchValue){
     $(".wind").text("Wind Speed: " + data.wind.speed);
     $(".humidity").text("Humidity: " + data.main.humidity);
     var tempC = data.main.temp - 273.15;
-    $(".tempC").text("Temperature (C) " + tempC.toFixed(2));
+    $(".tempC").text("Temperature (C): " + tempC.toFixed(2));
 
             var lattitude = data.coord.lat;
             var longtitude = data.coord.lon;
@@ -55,16 +55,32 @@ function getFutureWeather(lattitude, longtitude) {
 .then(function (data) {
     console.log(data)
 
-        var date = moment.unix(data.daily[0].dt).format("DD/MM/YYYY");
-        var icon = data.daily[0].weather[0].icon;
-        var image = "http://openweathermap.org/img/w/" + icon + ".png";
-        var tomorrowTemp = data.daily[0].temp.day;
-        var tomorrowHumidity = data.daily[0].humidity;
+    for (let i = 1; i < 6; i++) {
+        
+        var date = moment.unix(data.daily[i].dt).format("DD/MM/YYYY");
+        var image = "http://openweathermap.org/img/w/" + data.daily[i].weather[0].icon + ".png";
+        var tomorrowTemp = Math.floor(data.daily[i].temp.day - 273.15);
+        var tomorrowHumidity = data.daily[i].humidity;
+        var weatherImage = $("<img>").attr("src", image);
+            $(".fivedayforecast").append(weatherImage);
 
-        $(".day1").html("Date: " + date + " & " + "Temp:" + tomorrowTemp + " & " + "Humidity:" + tomorrowHumidity);
+        var days = $("<div></div>").attr("class", "days").append("Date: " + date + " & " + "Temp (C): " + tomorrowTemp  + " & " + "Humidity: " + tomorrowHumidity);
+        $(".fivedayforecast").append(days);
 
-            var weatherImage = $("<img>").attr("src", image);
-            $(".day1").append(weatherImage);
+        $(".uvIndex").text("UV Index: " + data.current.uvi);
+        if (data.current.uvi < 3) {
+            $(".uvIndex").css({ "background-color": "green", "color": "white" });
+        }
+        if (data.current.uvi >= 3 && data.current.uvi <= 5) {
+            $(".uvIndex").css({ "background-color": "purple", "color": "white" });
+        }
+        if (data.current.uvi > 5) {
+            $(".uvIndex").css({ "background-color": "red", "color": "white" });
+        }
+
+
+           
+    }
 });
 }
 

@@ -14,9 +14,39 @@
     <title>Weather Dashboard</title>
 </head>
     <body>
-        
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-primary justify-content-center rounded">
+                    <a class="navbar-brand font-weight-bold font-size-xl-2" href="index.HTML"><h1>Weather Dashboard</h1></a>
+            </nav>
+        </div>
+        <div class="leftSide" id="">
+            <input type="text" id="enterCity" placeholder="Enter a City Name!">
+            <ul class="list-group leftList bg-primary">
+                <li class="list-group-item bg-primary">Cras justo odio</li>
+            </ul>
+        </div>
+        <div class="container-fluid bg-primary rightSide" id="">
+            <div class="city"></div>
+            <div class="tempC"></div>
+            <div class="humidity"></div>
+            <div class="wind"></div>
+            <div class="uvIndex"></div>
+            <br>
+            <h1>5-day Forecast</h1>
+            <div class="fivedayforecast row">
+                <div class="day1 col-12 mb-3 col-md-auto">
+                    <img src="" alt="" class="day1image">
+                </div>
+                <div class="day2 col-12 mb-3 col-md-auto"></div>
+                <div class="day3 col-12 mb-3 col-md-auto"></div>
+                <div class="day4 col-12 mb-3 col-md-auto"></div>
+                <div class="day5 col-12 mb-3 col-md-auto"></div>
+            </div>
+        </div>
+    </div>
 
 
+    </div>
 
         <script src="./assets/project.js"></script>
     </body>

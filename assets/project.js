@@ -7,11 +7,8 @@ var searchHistory = [];
 
 userForm.addEventListener('submit', function(event) {
     event.preventDefault()
-    console.log("submit works!")
 
     var searchValue = userInput.value.trim();
-    
-    console.log(searchValue);
     
     getWeather(searchValue);
 
@@ -25,7 +22,6 @@ userForm.addEventListener('submit', function(event) {
 
 function getWeather(searchValue){
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + searchValue + "&appid=232ce0ece863b7a104e0cace8f3b4568"
-    console.log(searchValue)
     fetch(apiUrl).then(function (response) {
     return response.json();
 })
@@ -47,10 +43,42 @@ function getWeather(searchValue){
             console.log(lattitude);
             console.log(longtitude);
 
-            // getFutureWeather(lat, lon);
-})
+            getFutureWeather(lattitude, longtitude);
+});
 }
 
+function getFutureWeather(lattitude, longtitude) {
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lattitude + "&lon=" + longtitude + "&appid=232ce0ece863b7a104e0cace8f3b4568";
+    fetch(apiUrl).then(function (response) {
+    return response.json();
+})
+.then(function (data) {
+    console.log(data)
+
+        var date = moment.unix(data.daily[0].dt).format("DD/MM/YYYY");
+        var icon = data.daily[0].weather[0].icon;
+        var image = "http://openweathermap.org/img/w/" + icon + ".png";
+        var tomorrowTemp = data.daily[0].temp.day;
+        var tomorrowHumidity = data.daily[0].humidity;
+
+        $(".day1").html("Date: " + date + " & " + "Temp:" + tomorrowTemp + " & " + "Humidity:" + tomorrowHumidity);
+
+            var weatherImage = $("<img>").attr("src", image);
+            $(".day1").append(weatherImage);
+});
+}
+
+
+
+
+
+
+
+
+
+
+
+// below this is done //
 init()
 
 function init() {

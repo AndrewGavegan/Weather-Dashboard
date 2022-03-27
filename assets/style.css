@@ -4,6 +4,7 @@
     box-sizing: border-box;
     font-family: Arial;
     color: #fff;
+    border-radius: 8px;
 }
 
 #enterCity{
@@ -11,8 +12,32 @@
     padding: 3px;
 }
 
+ul{
+    background-color: #0d6efd!important;
+    cursor: pointer;
+    margin: 10px;
+}
+
+button{
+    text-decoration: none;
+    background: none;
+    color: white;
+    border: 1px solid white;
+    border-radius: 14px;
+    padding: 3px;
+    font-weight: bold;
+    margin-left: 30px;
+    margin-top: 5px;
+}
 li{
     border-radius: 8px;
+    background-color: #0d6efd!important;
+    cursor: pointer;
+    margin: 10px;
+}
+
+li:hover{
+    color: black;
 }
 
 .leftSide{

@@ -5,19 +5,25 @@ var userList = document.getElementById('userList')
 var fiveDay = document.querySelector('.fivedayforecast')
 var searchHistory = [];
 
+
 userForm.addEventListener('submit', function(event) {
     event.preventDefault()
-
+    if (userInput.value === '' || userList.value === null) {
+        return;}
+    else {
+        $(".rightSide").css("display", "block")
     var searchValue = userInput.value.trim();
     fiveDay.innerHTML = " "
     getWeather(searchValue);
+    
 
     searchHistory.push(searchValue);
     userInput.value = "";
     
 
     setCity();
-    renderCity();
+    renderCity();;
+    }
 })
 
 function getWeather(searchValue){
@@ -62,9 +68,9 @@ function getFutureWeather(lattitude, longtitude) {
         var tomorrowTemp = Math.floor(data.daily[i].temp.day - 273.15);
         var tomorrowHumidity = data.daily[i].humidity;
         var weatherImage = $("<img>").attr("src", image);
-            $(".fivedayforecast").append(weatherImage);
-
-        var days = $("<div></div>").attr("class", "days").append("Date: " + date + " & " + "Temp (C): " + tomorrowTemp  + " & " + "Humidity: " + tomorrowHumidity);
+        
+        var days = $("<div></div>").attr("class", "days").append("Date: \n" + date + "\n Temp (C): \n" + tomorrowTemp + "\n \n Humidity: " + tomorrowHumidity);
+        days.prepend(weatherImage);
         $(".fivedayforecast").append(days);
 
         $(".uvIndex").text("UV Index: " + data.current.uvi);
@@ -139,6 +145,8 @@ $(userList).click(function (event) {
         renderCity();
     }
     else {
+        fiveDay.innerHTML = " "
+        $(".rightSide").css("display", "block")
         var searchValue = element.innerText;
         getWeather(searchValue);
     }

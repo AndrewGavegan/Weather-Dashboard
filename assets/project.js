@@ -35,14 +35,16 @@ function getWeather(searchValue){
     console.log(data);
 
     var today = moment.unix(data.dt).format("DD/MM/YYYY");
-    console.log(today)
+    
 
     $(".city").html("<h1>" + data.name + ": Weather Details: " + today + "</h1>");
     $(".wind").text("Wind Speed: " + data.wind.speed);
     $(".humidity").text("Humidity: " + data.main.humidity);
     var tempC = data.main.temp - 273.15;
     $(".tempC").text("Temperature (C): " + tempC.toFixed(2));
-
+    var image = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+    var weatherImage = $("<img>").attr("src", image);
+    $(".city").append(weatherImage);
             var lattitude = data.coord.lat;
             var longtitude = data.coord.lon;
 
@@ -59,7 +61,7 @@ function getFutureWeather(lattitude, longtitude) {
     return response.json();
 })
 .then(function (data) {
-    console.log(data)
+   
 
     for (let i = 1; i < 6; i++) {
         
